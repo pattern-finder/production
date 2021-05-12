@@ -55,8 +55,6 @@ services:
 
   judge-server:
     image: judge0/judge0:1.13.0
-    volumes:
-      - ./judge0.conf:/judge0.conf:ro
     privileged: true
     <<: *default-logging
     restart: always
@@ -66,8 +64,6 @@ services:
   judge-workers:
     image: judge0/judge0:1.13.0
     command: ["./scripts/workers"]
-    volumes:
-      - ./judge0.conf:/judge0.conf:ro
     privileged: true
     <<: *default-logging
     restart: always
