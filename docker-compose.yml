@@ -36,6 +36,9 @@ services:
       SECRET_JWT_KEY: ${SECRET_JWT_KEY}
       JUDGEZERO_URL: ${JUDGEZERO_URL}
       JUDGEZERO_PORT: ${JUDGEZERO_PORT}
+      MINIO_ACCESS_KEY: ${MINIO_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET}
+      MINIO_USESSL: ${MINIO_USESSL}
     networks: 
       - backend
       - judgezero
@@ -55,7 +58,8 @@ services:
 
   judge-server:
     image: judge0/judge0:1.13.0
-    privileged: true
+    ports:
+      - "2358:2358"
     <<: *default-logging
     restart: always
     networks: 
@@ -64,7 +68,6 @@ services:
   judge-workers:
     image: judge0/judge0:1.13.0
     command: ["./scripts/workers"]
-    privileged: true
     <<: *default-logging
     restart: always
     networks: 
@@ -93,8 +96,44 @@ services:
     restart: always
     networks: 
       - judgezero
+      
+  picspy-minio:
+    image: minio/minio
+    volumes:
+    - picspy-minio:/data
+    environment:
+      MINIO_ACCESS_KEY: ${MINIO_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET}
+      MINIO_USESSL: ${MINIO_USESSL}
+    command: server /data
+    ports:
+      - 9002:9000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+    restart: always
+    networks: 
+      - backend
+      
+  picspy-createbuckets:
+      image: minio/mc
+      depends_on:
+        - picspy-minio
+      ports:
+        - 7999:9000
+      entrypoint: >
+        /bin/sh -c "
+        /usr/bin/mc config host add myminio http://picspy-minio:9000 $MINIO_KEY $MINIO_SECRET; 
+        /usr/bin/mc mb -p myminio/picspy-pps;
+        /usr/bin/mc policy set download myminio/picspy-pps;
+        /usr/bin/mc mb -p myminio/picspy-challenges;
+        /usr/bin/mc policy set download myminio/picspy-challenges;
+        exit 0;
+        "
+      networks: 
+        - backend
 
 volumes:
   postgres-data:
   redis-data:
   picspy-data:
+  picspy-minio:
