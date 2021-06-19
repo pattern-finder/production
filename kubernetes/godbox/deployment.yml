@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: picspy-godbox
+  labels:
+    app: picspy
+  namespace: picspy
+spec:
+  selector:
+    matchLabels:
+      app: picspy
+  template:
+    metadata:
+      labels:
+        app: picspy
+    spec:
+      imagePullSecrets:
+        - name: vagahbond-registry-creds
+
+      containers:
+        - name: picspy-godbox
+          image: quantumsheep/godbox:2
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 8080
+          securityContext:
+            allowPrivilegeEscalation: true
+          envFrom:
+            - configMapRef:
+                name: picspy-configmap

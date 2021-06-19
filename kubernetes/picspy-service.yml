@@ -12,13 +12,22 @@ spec:
       port: 3080
       targetPort: 80
 
-    - name: picspy-apo-port
+    - name: picspy-api-port
       port: 3000
       targetPort: 3000
 
+    - name: picspy-database-port
+      port: 27017
+      targetPort: 27017
+
+    - name: picspy-godbox-port
+      port: 8080
+      targetPort: 8080
+
     - name: picspy-minio-port
-      port: 9000
-      targetPort: 9000
+      port: 4222
+      targetPort: 4222
+
   selector:
     app: picspy
 
