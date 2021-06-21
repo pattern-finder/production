@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: picspy-frontend
   labels:
-    app: picspy
+    app: frontend
   namespace: picspy
 spec:
   selector:
     matchLabels:
-      app: picspy
+      app: frontend
   template:
     metadata:
       labels:
-        app: picspy
+        app: frontend
     spec:
       imagePullSecrets:
         - name: vagahbond-registry-creds
@@ -24,10 +24,10 @@ spec:
         imagePullPolicy: Always
         resources:
           limits:
-            memory: "128Mi"
+            memory: "256Mi"
             cpu: "500m"
         ports:
-        - containerPort: 80
+        - containerPort: 90
         envFrom:
           - configMapRef:
               name: picspy-configmap

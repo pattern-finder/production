@@ -3,10 +3,12 @@ kind: Ingress
 metadata:
   name: picspy-ingress
   namespace: picspy
-  annotations:
-    ingress.kubernetes.io/ssl-redirect: "false"
+  # annotations:
+    # kubernetes.io/ingress.class: traefik
+    # ingress.kubernetes.io/ssl-redirect: "false"
   labels:
     app: picspy
+  
 spec:
   rules:
     - host: "picspy.vagahbond.com"
@@ -16,7 +18,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: picspy-service
+                name: picspy-frontend-service
                 port:
                   number: 3080
     - host: "api.picspy.vagahbond.com"
@@ -26,17 +28,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: picspy-service
+                name: picspy-api-service
                 port:
                   number: 3000
-    - host: "minio.picspy.vagahbond.com"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: operator.minio-operator.svc.cluster.local
-                port:
-                  number: 4222
-                

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: picspy-database-service
+  namespace: picspy
+  labels:
+    app: database
+spec:
+  selector:
+      app: database
+  ports:
+    - name: picspy-database-port
+      port: 27017
+      targetPort: 27017

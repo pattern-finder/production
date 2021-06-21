@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: picspy-mongo
   labels:
-    app: picspy
+    app: database
   namespace: picspy
 spec:
   selector:
     matchLabels:
-      app: picspy
+      app: database
   template:
     metadata:
       labels:
-        app: picspy
+        app: database
     spec:
 
       containers:

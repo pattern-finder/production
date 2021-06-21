@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: picspy-api-service
+  namespace: picspy
+  labels:
+    app: api
+spec:
+  selector:
+      app: api
+  ports:
+    - name: picspy-api-port
+      port: 3000
+      targetPort: 3000

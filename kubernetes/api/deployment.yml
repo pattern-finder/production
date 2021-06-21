@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: picspy-api
   labels:
-    app: picspy
+    app: api
   namespace: picspy
 spec:
   selector:
     matchLabels:
-      app: picspy
+      app: api
   template:
     metadata:
       labels:
-        app: picspy
+        app: api
     spec:
       imagePullSecrets:
         - name: vagahbond-registry-creds

@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: picspy-godbox
   labels:
-    app: picspy
+    app: godbox
   namespace: picspy
 spec:
   selector:
     matchLabels:
-      app: picspy
+      app: godbox
   template:
     metadata:
       labels:
-        app: picspy
+        app: godbox
     spec:
       imagePullSecrets:
         - name: vagahbond-registry-creds
