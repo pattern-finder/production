@@ -5,6 +5,8 @@ metadata:
   namespace: picspy
   annotations:
     ingress.kubernetes.io/ssl-redirect: "false"
+  labels:
+    app: picspy
 spec:
   rules:
     - host: "picspy.vagahbond.com"
@@ -34,6 +36,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: picspy-service
+                name: operator.minio-operator.svc.cluster.local
                 port:
-                  number: 9000
+                  number: 4222
+                
