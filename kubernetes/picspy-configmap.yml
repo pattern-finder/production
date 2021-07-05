@@ -23,6 +23,6 @@ data:
   MINIO_EXTERNAL_PORT: "80"
   MINIO_ACCESS_KEY: miniokey
   MINIO_SECRET_KEY: miniosecret
-  USESSL: 'true'
+  USESSL: 'false'
 
 
