@@ -29,6 +29,7 @@ spec:
           - containerPort: 8080
           securityContext:
             allowPrivilegeEscalation: true
+            privileged: true
           envFrom:
             - configMapRef:
                 name: picspy-configmap
