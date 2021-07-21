@@ -19,7 +19,7 @@ spec:
 
       containers:
         - name: picspy-godbox
-          image: registry.qtmsheep.com/vagahbond/picspy/picspy-godbox:latest
+          image: registry.qtmsheep.com/vagahbond/picspy/godbox:latest
           imagePullPolicy: Always
           resources:
             limits:
